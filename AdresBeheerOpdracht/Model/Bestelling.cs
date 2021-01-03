@@ -102,7 +102,10 @@ namespace AdresBeheerOpdracht.Model
         }
         public void ZetBestellingId(int id)
         {
-            if (id <= 0) throw new BestellingException("Bestelling - invalid id");
+            //hier werd fout gegooid omdat we in de WPF een nieuwe bestelling op 0 zetten aangezien de db not niet werkt
+            //Hieronder vind je de bestelling id regel indien db gebruikt wordt
+            //if (id <= 0) throw new BestellingException("Bestelling - invalid id");
+            if(id < 0 ) throw new BestellingException("Bestelling - invalid id");
             BestellingId = id;
         }
         public void ZetTijdstip(DateTime tijdstip)

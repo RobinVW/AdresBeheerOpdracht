@@ -3,6 +3,7 @@ using AdresBeheerOpdracht.Model;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 
 namespace AdresBeheerOpdracht.Managers
 {
@@ -13,6 +14,13 @@ namespace AdresBeheerOpdracht.Managers
         {
             return new List<Bestelling>(_bestellingen.Values).AsReadOnly();
         }
+
+        public IReadOnlyList<Bestelling> GeefBestellingen(Func<Bestelling, bool> predicate)
+        {
+            var selection = _bestellingen.Values.Where<Bestelling>(predicate).ToList();
+            return (IReadOnlyList<Bestelling>)selection;
+        }
+
         public void VoegBestellingToe(Bestelling bestelling)
         {
             if (_bestellingen.ContainsKey(bestelling.BestellingId))

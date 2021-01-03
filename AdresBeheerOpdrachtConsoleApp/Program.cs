@@ -1,5 +1,4 @@
-﻿using AdresBeheerOpdracht.Factories;
-using AdresBeheerOpdracht.Managers;
+﻿using AdresBeheerOpdracht.Managers;
 using AdresBeheerOpdracht.Model;
 using AdresBeheerOpdracht.Tools;
 using System;
@@ -29,8 +28,8 @@ namespace AdresBeheerOpdrachtConsoleApp
             bM.VoegBestellingToe(BestellingFactory.MaakBestelling(kM.GeefKlant(1), idF));
 
             Bestelling b = bM.GeefBestelling(101);
-            //b.VoegProductToe(pM.HaalOp("product 2"),8);
-            //b.VoegProductToe(pM.HaalOp("product 1"), 7);
+            b.VoegProductToe(pM.GeefProduct("product 2"),8);
+            b.VoegProductToe(pM.GeefProduct("product 1"), 7);
             Console.WriteLine($"Prijs:{b.Kostprijs()}, {b.PrijsBetaald}");
             b.ZetBetaald();
             Console.WriteLine($"Prijs:{b.Kostprijs()}, {b.PrijsBetaald}");
