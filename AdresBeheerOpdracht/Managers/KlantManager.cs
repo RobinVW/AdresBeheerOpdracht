@@ -4,10 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using AdresBeheerOpdracht.Interfaces;
 
 namespace AdresBeheerOpdracht.Managers
 {
-    public class KlantManager
+    public class KlantManager : IKlantManager
     {
         private Dictionary<int, Klant> _klanten = new Dictionary<int, Klant>();
         public IReadOnlyList<Klant> GeefKlanten()
@@ -29,6 +30,7 @@ namespace AdresBeheerOpdracht.Managers
             }
             else
             {
+                Console.WriteLine("Busines layer, data model");
                 _klanten.Add(klant.KlantId, klant);
             }
         }

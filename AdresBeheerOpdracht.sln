@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KlantBestellingen.WPF", "..
 		{00005DCD-7C33-4507-BCAE-45BF0746CC67} = {00005DCD-7C33-4507-BCAE-45BF0746CC67}
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KlantBestellingADO", "KlantBestellingADO2\KlantBestellingADO.csproj", "{4026563A-53D8-4447-811A-61A55AD14CCE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -31,6 +33,10 @@ Global
 		{C1077571-8654-4A7A-A740-8149B2F53C1A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C1077571-8654-4A7A-A740-8149B2F53C1A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C1077571-8654-4A7A-A740-8149B2F53C1A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4026563A-53D8-4447-811A-61A55AD14CCE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4026563A-53D8-4447-811A-61A55AD14CCE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4026563A-53D8-4447-811A-61A55AD14CCE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4026563A-53D8-4447-811A-61A55AD14CCE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

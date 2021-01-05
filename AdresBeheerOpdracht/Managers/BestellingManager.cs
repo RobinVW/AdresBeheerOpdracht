@@ -4,10 +4,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Linq;
+using AdresBeheerOpdracht.Interfaces;
 
 namespace AdresBeheerOpdracht.Managers
 {
-    public class BestellingManager
+    public class BestellingManager : IBestellingManager
     {
         private Dictionary<int, Bestelling> _bestellingen = new Dictionary<int, Bestelling>();
         public IReadOnlyList<Bestelling> GeefBestellingen()

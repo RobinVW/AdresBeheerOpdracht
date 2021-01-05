@@ -4,10 +4,11 @@ using System.Collections.Generic;
 using System.Text;
 using AdresBeheerOpdracht.Exceptions;
 using System.Linq;
+using AdresBeheerOpdracht.Interfaces;
 
 namespace AdresBeheerOpdracht.Managers
 {
-    public class ProductManager
+    public class ProductManager : IProductManager
     {
         private Dictionary<string, Product> _producten = new Dictionary<string, Product>();
         public IReadOnlyList<Product> GeefProducten()
@@ -27,7 +28,7 @@ namespace AdresBeheerOpdracht.Managers
                     _producten.Add(product.Naam, product);
                 }
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 throw new ProductManagerException("VoegProductToe", ex);
             }
@@ -56,7 +57,7 @@ namespace AdresBeheerOpdracht.Managers
         }
         public Product GeefProduct(int productId)
         {
-            if (!_producten.Values.Any(x=>x.ProductId==productId))
+            if (!_producten.Values.Any(x => x.ProductId == productId))
             {
                 throw new ProductManagerException("GeefProduct");
             }
@@ -65,5 +66,5 @@ namespace AdresBeheerOpdracht.Managers
                 return _producten.Values.First(x => x.ProductId == productId);
             }
         }
-    } 
+    }
 }
