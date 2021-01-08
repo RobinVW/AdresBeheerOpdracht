@@ -83,7 +83,7 @@ namespace KlantBestellingADO.Managers
 
         public IReadOnlyList<Product> GeefProducten()
         {
-            //maak de klanten dictionary leeg aangezien hij toch gevult wordt door de db.
+            //maak de producten dictionary leeg aangezien hij toch gevult wordt door de db.
             _producten.Clear();
             SqlConnection connection = getConnection();
             string query = "SELECT * FROM dbo.product";

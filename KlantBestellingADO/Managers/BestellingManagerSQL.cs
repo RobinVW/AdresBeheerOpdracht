@@ -26,22 +26,158 @@ namespace KlantBestellingADO.Managers
         }
         public Bestelling GeefBestelling(int bestellingId)
         {
-            throw new NotImplementedException();
+            SqlConnection connection = getConnection();
+            string query = "SELECT * FROM dbo.bestelling WHERE bestellingID = @bestellingID";
+            string query2 = "SELECT dbo.product.productID, dbo.product.naam, dbo.product.prijs, dbo.bestellingDetails.aantal FROM dbo.product"
+                + " INNER JOIN dbo.bestellingDetails ON dbo.product.productID = dbo.bestellingDetails.productID"
+                + " AND dbo.bestellingDetails.bestellingID = @bestellingID";
+            string query3 = "SELECT dbo.klant.klantID, dbo.klant.naam, dbo.klant.adres FROM dbo.klant"
++ " INNER JOIN dbo.bestelling ON dbo.klant.klantID = dbo.bestelling.klantID AND dbo.bestelling.bestellingID = @bestellingID";
+            using (SqlCommand command1 = connection.CreateCommand())
+            using (SqlCommand command2 = connection.CreateCommand())
+            using (SqlCommand command3 = connection.CreateCommand())
+            {
+                connection.Open();
+                command1.Parameters.Add("bestellingID", SqlDbType.Int).Value = bestellingId;
+                command2.Parameters.Add("bestellingID", SqlDbType.Int).Value = bestellingId;
+                command3.Parameters.Add("bestellingID", SqlDbType.Int).Value = bestellingId;
+                command1.CommandText = query;
+                command2.CommandText = query2;
+                command3.CommandText = query3;
+                SqlTransaction transaction = connection.BeginTransaction();
+                command1.Transaction = transaction;
+                command2.Transaction = transaction;
+                command3.Transaction = transaction;
+                try
+                {
+                    
+                    
+                    IDataReader klantReader = command3.ExecuteReader();
+                  
+                    klantReader.Read();
+                    Klant klant = new Klant((int)klantReader["klantID"], (string)klantReader["naam"], (string)klantReader["adres"]);
+                    klantReader.Close();
+
+                    IDataReader productenReader = command2.ExecuteReader();
+                    Dictionary<Product, int> _producten = new Dictionary<Product, int>();
+                    while (productenReader.Read()) {
+                        Product product = new Product((int)productenReader["productID"], (string)productenReader["naam"], (double)productenReader["prijs"]);
+                        _producten.Add(product, (int)productenReader["aantal"]);
+                    }
+                    productenReader.Close();
+
+                    IDataReader bestellingReader = command1.ExecuteReader();
+                    bestellingReader.Read();
+                    Bestelling bestelling = new Bestelling((int)bestellingReader["bestellingID"], klant, (DateTime)bestellingReader["tijdstip"], _producten);
+                    if ((Boolean)bestellingReader["betaald"]) {
+                        bestelling.ZetBetaald();
+                    }
+                    bestellingReader.Close();
+                    transaction.Commit();
+                    return bestelling;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    return null;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
         }
 
         public IReadOnlyList<Bestelling> GeefBestellingen()
         {
-            throw new NotImplementedException();
+            _bestellingen.Clear();
+            SqlConnection connection = getConnection();
+            string query = "select b.bestellingID, b.betaald, b.tijdstip, b.klantID, k.naam, k.adres, p.productID, p.prijs, p.naam, bd.aantal from dbo.bestelling b"
+                            + " join dbo.bestellingDetails bd on b.bestellingID = bd.bestellingID"
+                            + " join dbo.product p on bd.productID = p.productID"
+                            + " join dbo.klant k on b.klantID = k.klantID order by b.bestellingID asc";
+
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                command.CommandText = query;
+                connection.Open();
+                try
+                {
+                    SqlDataReader dataReader = command.ExecuteReader();
+                    while (dataReader.Read())
+                    {
+                        int bestellingID = (int)dataReader["bestellingID"];
+                        //indien de bestelling al voorkomt, enkel het product van de query lijn toevoegen
+                        if (_bestellingen.ContainsKey(bestellingID))
+                        {
+                            Bestelling bestelling = _bestellingen[bestellingID];
+                            bestelling.VoegProductToe(new Product((int)dataReader["productID"], (string)dataReader["naam"], (double)dataReader["prijs"]), (int)dataReader["aantal"]);
+
+                            if ((Boolean)dataReader["betaald"])
+                            {
+                                bestelling.ZetBetaald();
+                            }
+                        }
+                        //nieuwe bestelling met klant toevoegen.
+                        else
+                        {
+                            Klant klant = new Klant((int)dataReader["klantID"], (string)dataReader["naam"], (string)dataReader["adres"]);
+                            Bestelling bestelling = new Bestelling((int)dataReader["bestellingID"], klant, (DateTime)dataReader["tijdstip"]);
+                        
+                            bestelling.VoegProductToe(new Product((int)dataReader["productID"], (string)dataReader["naam"], (double)dataReader["prijs"]), (int)dataReader["aantal"]);
+
+                            if ((Boolean)dataReader["betaald"])
+                            {
+                                bestelling.ZetBetaald();
+                            }
+                            _bestellingen.Add(bestelling.BestellingId, bestelling);
+                        }
+                    }
+                    dataReader.Close();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    return null;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+            return new List<Bestelling>(_bestellingen.Values).AsReadOnly();
         }
 
         public IReadOnlyList<Bestelling> GeefBestellingen(Func<Bestelling, bool> predicate)
         {
-            throw new NotImplementedException();
+            var selection = _bestellingen.Values.Where<Bestelling>(predicate).ToList();
+            return (IReadOnlyList<Bestelling>)selection;
         }
 
         public void VerwijderBestelling(Bestelling bestelling)
         {
-            throw new NotImplementedException();
+            SqlConnection connection = getConnection();
+            string query = "DELETE FROM dbo.bestellingDetails WHERE bestellingID = @bestellingID;"
+            +" DELETE FROM dbo.bestelling WHERE bestellingID = @bestellingID";
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                connection.Open();
+                
+                try
+                {
+                    command.Parameters.Add("@bestellingID", SqlDbType.Int).Value = bestelling.BestellingId;
+                    command.CommandText = query;
+                    command.ExecuteNonQuery();
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
         }
 
         public void VoegBestellingToe(Bestelling bestelling)

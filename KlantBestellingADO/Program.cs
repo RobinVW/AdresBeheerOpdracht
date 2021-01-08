@@ -97,6 +97,13 @@ namespace KlantBestellingADO2
             bestelling.ZetBetaald();
 
             bm.VoegBestellingToe(bestelling);
+            //bm.GeefBestelling(1).Show();
+            //bm.VerwijderBestelling(bm.GeefBestelling(1));
+
+            foreach (var b in bm.GeefBestellingen())
+            {
+                b.Show();
+            }
 
         }
 }
