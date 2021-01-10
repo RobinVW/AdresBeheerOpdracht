@@ -15,7 +15,7 @@ namespace KlantBestellingADO2
             Klant klant3 = new Klant("Jan Aap", "eenstraatinbelgie 50 9000 Gent");
             Klant klant4 = new Klant("Joske Vermeulen", "teststraat 4 9700 Oudenaarde");*/
 
-            IKlantManager km = new KlantManagerSQL("Data Source=DESKTOP-ICIHEO8\\SQLEXPRESS;Initial Catalog=KlantBestellingADO;Integrated Security=True");
+            IKlantManager km = new KlantManagerSQL("Data Source=DESKTOP-ICIHEO8\\SQLEXPRESS;Initial Catalog=KlantBestellingADO;Integrated Security=True;MultipleActiveResultSets=True");
 
             /*km.VoegKlantToe(klant1);
             km.VoegKlantToe(klant2);
@@ -85,9 +85,9 @@ namespace KlantBestellingADO2
             Console.WriteLine("selecteer product 3 op basis van Naam:");
             Console.WriteLine(pm.GeefProduct(product3.Naam).ToString() + "\n");*/
 
-            IBestellingManager bm = new BestellingManagerSQL("Data Source=DESKTOP-ICIHEO8\\SQLEXPRESS;Initial Catalog=KlantBestellingADO;Integrated Security=True");
+            IBestellingManager bm = new BestellingManagerSQL("Data Source=DESKTOP-ICIHEO8\\SQLEXPRESS;Initial Catalog=KlantBestellingADO;Integrated Security=True;MultipleActiveResultSets=True");
 
-            Dictionary<Product, int> _producten = new Dictionary<Product, int>();
+            /*Dictionary<Product, int> _producten = new Dictionary<Product, int>();
             _producten.Add(pm.GeefProduct(1), 1);
             _producten.Add(pm.GeefProduct(2), 2);
             _producten.Add(pm.GeefProduct(3), 1);
@@ -96,15 +96,32 @@ namespace KlantBestellingADO2
             Bestelling bestelling = new Bestelling(0, km.GeefKlant(1), DateTime.Now, _producten);
             bestelling.ZetBetaald();
 
-            bm.VoegBestellingToe(bestelling);
+            bm.VoegBestellingToe(bestelling);*/
             //bm.GeefBestelling(1).Show();
-            //bm.VerwijderBestelling(bm.GeefBestelling(1));
+            //bm.VerwijderBestelling(bm.GeefBestelling(2));
 
-            foreach (var b in bm.GeefBestellingen())
+            /*foreach (var b in bm.GeefBestellingen())
             {
                 b.Show();
-            }
+            }*/
 
+            /*foreach (var k in km.GeefKlanten())
+            {
+                foreach (var b in k.GetBestellingen())
+                {
+                    Console.WriteLine("geef klanten -> alle bestellingen -> show");
+                    b.Show();
+                }
+            }*/
+            /*bm.GeefBestellingen();
+            
+            foreach (var b in bm.GeefBestellingen(b => b.Klant.KlantId == 1))
+            {
+                b.Show();
+            }*/
+            
+            
         }
+    }
 }
-}
+

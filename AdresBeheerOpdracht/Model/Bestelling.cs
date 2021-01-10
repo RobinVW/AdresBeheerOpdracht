@@ -4,12 +4,12 @@ using System.Collections.Generic;
 
 namespace AdresBeheerOpdracht.Model
 {
-    public class Bestelling
+    public class Bestelling : Observable
     {
         public int BestellingId { get; private set; }
         public bool Betaald { get; private set; }
         public double PrijsBetaald { get; private set; }
-        public Klant Klant { get; private set; }
+        public Klant Klant { get; set; }
         public DateTime Tijdstip { get; private set; }
         private Dictionary<Product, int> _producten = new Dictionary<Product, int>();
 
@@ -84,6 +84,7 @@ namespace AdresBeheerOpdracht.Model
             {
                 prijs += kvp.Key.Prijs * kvp.Value * (100.0 - korting) / 100.0;
             }
+            NotifyPropertyChanged("Prijs");
             return prijs;
         }
         public void VerwijderKlant()
@@ -120,6 +121,7 @@ namespace AdresBeheerOpdracht.Model
             {
                 PrijsBetaald = Kostprijs();
             }
+            NotifyPropertyChanged("Betaald");
         }
 
         public override bool Equals(object obj)

@@ -92,48 +92,65 @@ namespace KlantBestellingADO.Managers
         {
             _bestellingen.Clear();
             SqlConnection connection = getConnection();
-            string query = "select b.bestellingID, b.betaald, b.tijdstip, b.klantID, k.naam, k.adres, p.productID, p.prijs, p.naam, bd.aantal from dbo.bestelling b"
-                            + " join dbo.bestellingDetails bd on b.bestellingID = bd.bestellingID"
-                            + " join dbo.product p on bd.productID = p.productID"
-                            + " join dbo.klant k on b.klantID = k.klantID order by b.bestellingID asc";
+            string bQuery = "SELECT * FROM dbo.bestelling b ORDER BY b.klantID";
+            string pQuery = "SELECT p.*,bd.aantal FROM dbo.bestellingDetails bd"
+                            +" JOIN dbo.product p ON p.productID = bd.productID"
+                            +" WHERE bd.bestellingID = @bestellingID";
+            string kQuery = "SELECT * FROM dbo.klant k WHERE k.klantID = @klantID";
 
-            using (SqlCommand command = connection.CreateCommand())
+            using (SqlCommand command1 = connection.CreateCommand())
+            using (SqlCommand command2 = connection.CreateCommand())
+            using (SqlCommand command3 = connection.CreateCommand())
             {
-                command.CommandText = query;
                 connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+                command1.Transaction = transaction;
+                command2.Transaction = transaction;
+                command3.Transaction = transaction;
                 try
                 {
-                    SqlDataReader dataReader = command.ExecuteReader();
-                    while (dataReader.Read())
+                    command1.CommandText = bQuery;
+                    SqlDataReader bReader = command1.ExecuteReader();
+                    command2.Parameters.Add(new SqlParameter("bestellingID", SqlDbType.Int));
+                    command3.Parameters.Add(new SqlParameter("klantID", SqlDbType.Int));
+
+                    Klant bestaandeKlant = null;
+
+                    while (bReader.Read())
                     {
-                        int bestellingID = (int)dataReader["bestellingID"];
-                        //indien de bestelling al voorkomt, enkel het product van de query lijn toevoegen
-                        if (_bestellingen.ContainsKey(bestellingID))
+                        Dictionary<Product, int> _producten = new Dictionary<Product, int>();
+                        command2.Parameters["bestellingID"].Value = (int)bReader["bestellingID"];
+                        command2.CommandText = pQuery;
+                        SqlDataReader pReader = command2.ExecuteReader();
+                        while (pReader.Read())
                         {
-                            Bestelling bestelling = _bestellingen[bestellingID];
-                            bestelling.VoegProductToe(new Product((int)dataReader["productID"], (string)dataReader["naam"], (double)dataReader["prijs"]), (int)dataReader["aantal"]);
-
-                            if ((Boolean)dataReader["betaald"])
-                            {
-                                bestelling.ZetBetaald();
-                            }
+                            _producten.Add(new Product((int)pReader["productID"], (string)pReader["naam"], (double)pReader["prijs"]), (int)pReader["aantal"]);
                         }
-                        //nieuwe bestelling met klant toevoegen.
-                        else
+                        pReader.Close();
+
+                        command3.CommandText = kQuery;
+                        command3.Parameters["klantID"].Value = (int)bReader["klantID"];
+                        SqlDataReader kReader = command3.ExecuteReader();
+                        kReader.Read();
+                        Klant klant = new Klant((int)bReader["klantID"], (string)kReader["naam"], (string)kReader["adres"]);
+                        kReader.Close();
+
+                        //indien het de eerste keer door de while lus gaat wordt de klant gelink aan bestaande klant
+                        if(bestaandeKlant == null) bestaandeKlant = klant;
+                        //indien de klant niet gelijk is aan de bestaande klant wordt de bestaande klant aangepast, op die manier worden de bestellingen aan de lijst van 
+                        //bestelling van de klant toegevoegd indien de klant dus al bestaat
+                        if(!bestaandeKlant.Equals(klant)) bestaandeKlant = klant;
+
+                        Bestelling bestelling = new Bestelling((int)bReader["bestellingID"], bestaandeKlant, (DateTime)bReader["tijdstip"], _producten);
+                        //check of bestelling betaald is, zoja -> zet betaald
+                        if ((Boolean)bReader["betaald"])
                         {
-                            Klant klant = new Klant((int)dataReader["klantID"], (string)dataReader["naam"], (string)dataReader["adres"]);
-                            Bestelling bestelling = new Bestelling((int)dataReader["bestellingID"], klant, (DateTime)dataReader["tijdstip"]);
-                        
-                            bestelling.VoegProductToe(new Product((int)dataReader["productID"], (string)dataReader["naam"], (double)dataReader["prijs"]), (int)dataReader["aantal"]);
-
-                            if ((Boolean)dataReader["betaald"])
-                            {
-                                bestelling.ZetBetaald();
-                            }
-                            _bestellingen.Add(bestelling.BestellingId, bestelling);
+                            bestelling.ZetBetaald();
                         }
+                        _bestellingen.Add(bestelling.BestellingId, bestelling);
+
                     }
-                    dataReader.Close();
+                    bReader.Close();
                 }
                 catch (Exception ex)
                 {
@@ -150,7 +167,14 @@ namespace KlantBestellingADO.Managers
 
         public IReadOnlyList<Bestelling> GeefBestellingen(Func<Bestelling, bool> predicate)
         {
+            GeefBestellingen();
             var selection = _bestellingen.Values.Where<Bestelling>(predicate).ToList();
+            return (IReadOnlyList<Bestelling>)selection;
+        }
+
+        public IReadOnlyList<Bestelling> GeefBestellingen(Klant klant)
+        {
+            var selection = _bestellingen.Values.Where(b => b.Klant == klant).ToList();
             return (IReadOnlyList<Bestelling>)selection;
         }
 

@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace AdresBeheerOpdracht.Model
 {
-    public class Klant
+    public class Klant : Observable
     {
         public int KlantId { get; private set; }
         public string Naam { get; private set; }
@@ -31,11 +31,13 @@ namespace AdresBeheerOpdracht.Model
         {
             if (naam.Trim().Length < 1) throw new KlantException("Klant naam invalid");
             Naam = naam;
+            NotifyPropertyChanged("Naam"); // string moet exact overeenkomen met property Naam
         }
         public void ZetAdres(string adres)
         {
             if (adres.Trim().Length < 5) throw new KlantException("Klant adres invalid");
             Adres = adres;
+            NotifyPropertyChanged("Adres"); // string moet exact overeenkomen met property Adres
         }
         public IReadOnlyList<Bestelling> GetBestellingen()
         {
@@ -86,6 +88,13 @@ namespace AdresBeheerOpdracht.Model
         {
             Console.WriteLine(this);
             foreach (Bestelling b in _bestellingen) Console.WriteLine($"    bestelling:{b}");
+        }
+
+        public override bool Equals(object obj)
+        {
+            return obj is Klant klant &&
+                Naam == klant.Naam &&
+                Adres == klant.Adres;
         }
     }
 }

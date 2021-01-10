@@ -3,7 +3,7 @@ using System;
 
 namespace AdresBeheerOpdracht.Model
 {
-    public class Product
+    public class Product : Observable
     {
         public Product(string naam) => ZetNaam(naam);
         public Product(string naam, double prijs) : this(naam) => ZetPrijs(prijs);

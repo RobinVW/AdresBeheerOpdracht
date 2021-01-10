@@ -28,8 +28,67 @@ namespace KlantBestellingADO.Managers
         public Klant GeefKlant(int klantId)
         {
             SqlConnection connection = getConnection();
-            string query = "SELECT * FROM dbo.klant WHERE klantID = @id";
-            using(SqlCommand command = connection.CreateCommand())
+            string klantQuery = "SELECT * FROM dbo.klant WHERE klantID = @klantID";
+            string bestellingQuery = "Select * FROM dbo.bestelling b WHERE b.klantID = @klantID";
+            string productQuery = "SELECT * FROM dbo.bestellingDetails bd"
+                                    + " JOIN dbo.product p ON p.productID = bd.productID"
+                                    + " WHERE bd.bestellingID = @bestellingID";
+
+            using (SqlCommand command1 = connection.CreateCommand())
+            using (SqlCommand command2 = connection.CreateCommand())
+            using (SqlCommand command3 = connection.CreateCommand())
+            {
+                connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+                command1.Transaction = transaction;
+                command2.Transaction = transaction;
+                command3.Transaction = transaction;
+                try
+                {
+                    command1.CommandText = klantQuery;
+                    command1.Parameters.Add(new SqlParameter("klantID", SqlDbType.Int));
+                    command1.Parameters["klantID"].Value = klantId;
+                    SqlDataReader klantReader = command1.ExecuteReader();
+                    
+                    command2.Parameters.Add(new SqlParameter("klantID", SqlDbType.Int));
+                    command3.Parameters.Add(new SqlParameter("bestellingID", SqlDbType.Int));
+                    klantReader.Read();
+                    
+                    Klant klant = new Klant((int)klantReader["klantID"], (string)klantReader["naam"], (string)klantReader["adres"]);
+                    command2.Parameters["klantID"].Value = klant.KlantId;
+                    command2.CommandText = bestellingQuery;
+                    SqlDataReader bestellingReader = command2.ExecuteReader();
+                    while (bestellingReader.Read())
+                    {
+                            Dictionary<Product, int> _producten = new Dictionary<Product, int>();
+                            command3.Parameters["bestellingID"].Value = (int)bestellingReader["bestellingID"];
+                            command3.CommandText = productQuery;
+                            SqlDataReader productReader = command3.ExecuteReader();
+                            while (productReader.Read())
+                            {
+                                _producten.Add(new Product((int)productReader["productID"], (string)productReader["naam"], (double)productReader["prijs"]), (int)productReader["aantal"]);
+                            }
+                            productReader.Close();
+                            Bestelling bestelling = new Bestelling((int)bestellingReader["bestellingID"], klant, (DateTime)bestellingReader["tijdstip"], _producten);
+                    }
+                    bestellingReader.Close();
+                    //_klanten.Add(klant.KlantId, klant);
+                    
+                    klantReader.Close();
+                    return klant;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                    return null;
+                }
+                finally
+                {
+                    connection.Close();
+                }
+
+            }
+            /*using(SqlCommand command = connection.CreateCommand())
             {
                 command.CommandText = query;
                 command.Parameters.Add("@id", SqlDbType.Int).Value = klantId;
@@ -51,32 +110,61 @@ namespace KlantBestellingADO.Managers
                 {
                     connection.Close();
                 }
-            }
+            }*/
+
         }
 
         public IReadOnlyList<Klant> GeefKlanten()
         {
             //maak de klanten dictionary leeg aangezien hij toch gevult wordt door de db.
             _klanten.Clear();
+
             SqlConnection connection = getConnection();
-            string query = "SELECT * FROM dbo.klant";
-            using(SqlCommand command = connection.CreateCommand())
+            string klantQuery = "Select * FROM dbo.klant";
+            string bestellingQuery = "Select * FROM dbo.bestelling b WHERE b.klantID = @klantID";
+            string productQuery = "SELECT * FROM dbo.bestellingDetails bd"
+                                    + " JOIN dbo.product p ON p.productID = bd.productID"
+                                    + " WHERE bd.bestellingID = @bestellingID";
+            using (SqlCommand command1 = connection.CreateCommand())
+            using (SqlCommand command2 = connection.CreateCommand())
+            using (SqlCommand command3 = connection.CreateCommand())
             {
-                command.CommandText = query;
                 connection.Open();
+                SqlTransaction transaction = connection.BeginTransaction();
+                command1.Transaction = transaction;
+                command2.Transaction = transaction;
+                command3.Transaction = transaction;
                 try
                 {
-                    SqlDataReader dataReader = command.ExecuteReader();
-                    while (dataReader.Read())
+                    command1.CommandText = klantQuery;
+                    SqlDataReader klantReader = command1.ExecuteReader();
+                    command2.Parameters.Add(new SqlParameter("klantID", SqlDbType.Int));
+                    command3.Parameters.Add(new SqlParameter("bestellingID", SqlDbType.Int));
+                    while (klantReader.Read())
                     {
-                        int id = (int)dataReader["klantId"];
-                        string naam = dataReader.GetString(dataReader.GetOrdinal("naam"));
-                        string adres = dataReader.GetString(dataReader.GetOrdinal("adres"));
-                        _klanten.Add(id, new Klant(id, naam, adres));
+                        Klant klant = new Klant((int)klantReader["klantID"], (string)klantReader["naam"], (string)klantReader["adres"]);
+                        command2.Parameters["klantID"].Value = klant.KlantId;
+                        command2.CommandText = bestellingQuery;
+                        SqlDataReader bestellingReader = command2.ExecuteReader();
+                        while (bestellingReader.Read())
+                        {
+                            Dictionary<Product, int> _producten = new Dictionary<Product, int>();
+                            command3.Parameters["bestellingID"].Value = (int)bestellingReader["bestellingID"];
+                            command3.CommandText = productQuery;
+                            SqlDataReader productReader = command3.ExecuteReader();
+                            while (productReader.Read())
+                            {
+                                _producten.Add(new Product((int)productReader["productID"], (string)productReader["naam"], (double)productReader["prijs"]),(int)productReader["aantal"]);
+                            }
+                            productReader.Close();
+                            Bestelling bestelling = new Bestelling((int)bestellingReader["bestellingID"], klant, (DateTime)bestellingReader["tijdstip"], _producten);
+                        }
+                        bestellingReader.Close();
+                        _klanten.Add(klant.KlantId, klant);
                     }
-                    dataReader.Close();
+                    klantReader.Close();
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Console.WriteLine(ex);
                     return null;
@@ -88,7 +176,6 @@ namespace KlantBestellingADO.Managers
             }
             return new List<Klant>(_klanten.Values).AsReadOnly();
         }
-
         public IReadOnlyList<Klant> GeefKlanten(Func<Klant, bool> predicate)
         {
             //Initialiseer alle klanten in de _klanten dictionary
