@@ -21,6 +21,7 @@ namespace KlantBestellingen.WPF
         }
         #endregion
 
+        //Update event
         public event EventHandler Update;
 
         protected virtual void OnUpdate(EventArgs e)
