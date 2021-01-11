@@ -55,5 +55,10 @@ namespace AdresBeheerOpdracht.Managers
                 return _bestellingen[bestellingId];
             }
         }
+
+        public void UpdateBestelling(Bestelling bestelling)
+        {
+
+        }
     }
 }

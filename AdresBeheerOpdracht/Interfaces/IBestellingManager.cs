@@ -11,5 +11,6 @@ namespace AdresBeheerOpdracht.Interfaces
         IReadOnlyList<Bestelling> GeefBestellingen(Func<Bestelling, bool> predicate);
         void VerwijderBestelling(Bestelling bestelling);
         void VoegBestellingToe(Bestelling bestelling);
+        void UpdateBestelling(Bestelling bestelling);
     }
 }

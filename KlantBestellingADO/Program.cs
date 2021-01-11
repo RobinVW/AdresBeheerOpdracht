@@ -119,8 +119,15 @@ namespace KlantBestellingADO2
             {
                 b.Show();
             }*/
-            
-            
+
+            /*Bestelling bestelling = bm.GeefBestelling(6);
+            bestelling.VoegProductToe(pm.GeefProduct(2), 2);
+            bestelling.ZetBetaald();
+            bm.UpdateBestelling(bestelling);*/
+            foreach (var b in km.GeefKlant(1).GetBestellingen())
+            {
+                b.Show();
+            }
         }
     }
 }

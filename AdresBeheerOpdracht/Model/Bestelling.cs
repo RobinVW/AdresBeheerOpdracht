@@ -84,7 +84,7 @@ namespace AdresBeheerOpdracht.Model
             {
                 prijs += kvp.Key.Prijs * kvp.Value * (100.0 - korting) / 100.0;
             }
-            NotifyPropertyChanged("Prijs");
+            NotifyPropertyChanged("TotalPrice");
             return prijs;
         }
         public void VerwijderKlant()

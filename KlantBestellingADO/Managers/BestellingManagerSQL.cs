@@ -192,6 +192,7 @@ namespace KlantBestellingADO.Managers
                     command.Parameters.Add("@bestellingID", SqlDbType.Int).Value = bestelling.BestellingId;
                     command.CommandText = query;
                     command.ExecuteNonQuery();
+                    bestelling.Klant.VerwijderBestelling(bestelling);
                 }
                 catch (Exception ex)
                 {
@@ -256,6 +257,75 @@ namespace KlantBestellingADO.Managers
                     }
                 }
             }
+        }
+
+        public void UpdateBestelling(Bestelling bestelling)
+        {
+            SqlConnection connection = getConnection();
+
+            string query ="SELECT * FROM dbo.bestelling b WHERE b.bestellingID = @bestellingID";
+            string query2 = "DELETE FROM dbo.bestellingDetails WHERE bestellingID = @bestellingID";
+            string query3 = "INSERT INTO dbo.bestellingDetails(productID,bestellingID,aantal) VALUES (@productID,@bestellingID,@aantal)";
+
+            using (SqlDataAdapter adapter = new SqlDataAdapter())
+            using (SqlCommand command = connection.CreateCommand())
+            {
+                connection.Open();
+
+                try
+                {
+                    //verwijder alles uit bestellingDetails met overeenkomend bestellingID
+                    command.Parameters.Add("@bestellingID", SqlDbType.Int).Value = bestelling.BestellingId;
+                    command.CommandText = query2;
+                    command.ExecuteNonQuery();
+
+                    //voeg nieuwe zaken toe aan bestellingDetails
+                    command.Parameters.Add(new SqlParameter("@productID", SqlDbType.Int));
+                    command.Parameters.Add(new SqlParameter("@aantal", SqlDbType.Int));
+                    command.CommandText = query3;
+
+                    foreach (KeyValuePair<Product, int> kvp in bestelling.GeefProducten())
+                    {
+                        command.Parameters["@productID"].Value = kvp.Key.ProductId;
+                        command.Parameters["@aantal"].Value = kvp.Value;
+                        command.ExecuteNonQuery();
+                    }
+                    if (bestelling.Betaald)
+                    {
+                        bestelling.ZetBetaald();
+                    }
+                    //update bestelling in de database
+                    SqlParameter paramId = new SqlParameter();
+                    paramId.ParameterName = "@bestellingID";
+                    paramId.DbType = DbType.Int32;
+                    paramId.Value = bestelling.BestellingId;
+                    SqlCommandBuilder builder = new SqlCommandBuilder();
+                    builder.DataAdapter = adapter;
+                    adapter.SelectCommand = new SqlCommand();
+                    adapter.SelectCommand.CommandText = query;
+                    adapter.SelectCommand.Connection = connection;
+                    adapter.SelectCommand.Parameters.Add(paramId);
+                    adapter.UpdateCommand = builder.GetUpdateCommand();
+                    DataTable table = new DataTable();
+                    adapter.Fill(table);
+                    table.Rows[0]["betaald"] = bestelling.Betaald;
+                    table.Rows[0]["prijsBetaald"] = bestelling.PrijsBetaald;
+                    table.Rows[0]["tijdstip"] = bestelling.Tijdstip;
+                    table.Rows[0]["klantID"] = bestelling.Klant.KlantId;
+
+                    adapter.Update(table);
+
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine(ex);
+                }
+                finally
+                {
+                    connection.Close();
+                }
+            }
+
         }
     }
 }
