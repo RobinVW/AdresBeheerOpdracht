@@ -7,7 +7,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdresBeheerOpdracht", "Adre
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AdresBeheerOpdrachtConsoleApp", "AdresBeheerOpdrachtConsoleApp\AdresBeheerOpdrachtConsoleApp.csproj", "{00005DCD-7C33-4507-BCAE-45BF0746CC67}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KlantBestellingen.WPF", "..\..\PS_EF-master\KlantBestellingen.WPF\KlantBestellingen.WPF.csproj", "{C1077571-8654-4A7A-A740-8149B2F53C1A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "KlantBestellingen.WPF", "KlantBestellingen.WPF\KlantBestellingen.WPF.csproj", "{C1077571-8654-4A7A-A740-8149B2F53C1A}"
 	ProjectSection(ProjectDependencies) = postProject
 		{B6205F94-3CA8-4C43-9C94-4ED7436A9319} = {B6205F94-3CA8-4C43-9C94-4ED7436A9319}
 		{00005DCD-7C33-4507-BCAE-45BF0746CC67} = {00005DCD-7C33-4507-BCAE-45BF0746CC67}

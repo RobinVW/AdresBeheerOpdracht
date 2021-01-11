@@ -25,8 +25,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\RobinVW\AdresBeheerOpdracht\AdresBeheerOpdracht\AdresBeheerOpdracht.csproj" />
-    <ProjectReference Include="..\..\RobinVW\AdresBeheerOpdracht\KlantBestellingADO\KlantBestellingADO.csproj" />
+    <ProjectReference Include="..\KlantBestellingADO\KlantBestellingADO.csproj" />
   </ItemGroup>
 
   <ItemGroup>
