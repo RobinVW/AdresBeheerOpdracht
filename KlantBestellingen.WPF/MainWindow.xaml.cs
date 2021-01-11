@@ -26,6 +26,7 @@ namespace KlantBestellingen.WPF
             _customerWindow.Closing += _Window_Closing;
             _productsWindow.Closing += _Window_Closing;
             _bestellingDetailWindow.Closing += _Window_Closing;
+            _bestellingDetailWindow.Update += Refresh;
 
             //als het het venster laden, initieel de bestellingButton disable aangezien de textbox dan toch empty is
             BtnNieuweBestelling.IsEnabled = false;

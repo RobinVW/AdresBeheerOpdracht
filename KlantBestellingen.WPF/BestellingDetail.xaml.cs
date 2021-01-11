@@ -21,6 +21,13 @@ namespace KlantBestellingen.WPF
         }
         #endregion
 
+        public event EventHandler Update;
+
+        protected virtual void OnUpdate(EventArgs e)
+        {
+            Update?.Invoke(this, e);
+        }
+
         #region Properties
         // Belangrijk: in WPF moet iets dat in XAML gebruikt wordt, een public property zijn:
         private Klant _klant;
@@ -42,6 +49,20 @@ namespace KlantBestellingen.WPF
 
         public string KlantNaam => _klant != null ? Klant.Naam : "";
         public string KlantAdres => _klant != null ? Klant.Adres : "";
+        private int _korting = 0;
+        public string Korting
+        {
+            get => _korting.ToString();
+            set
+            {
+                if(_korting.ToString() == value)
+                {
+                    return;
+                }
+                _korting = Int32.Parse(value);
+                NotifyPropertyChanged("Korting");
+            }
+        }
 
         private double _prijs = 0.0;
         public double Prijs
@@ -53,7 +74,8 @@ namespace KlantBestellingen.WPF
                 {
                     return;
                 }
-                _prijs = value; NotifyPropertyChanged("Prijs");
+                _prijs = value; 
+                NotifyPropertyChanged("TotalPrice");
             }
         }
 
@@ -81,15 +103,16 @@ namespace KlantBestellingen.WPF
                 foreach (var p in _orderProducts) 
                 { 
                     total += p.Prijs; 
-                } 
-                return total.ToString() + " EUR"; 
+                }
+                total = total * (100 -_korting) / 100;
+                return total.ToString() + " EUR";
             } 
         }
 
         private ObservableCollection<Product> _products = new ObservableCollection<Product>();
         private ObservableCollection<Product> _orderProducts = new ObservableCollection<Product>();
 
-        private Bestelling _order;
+        private Bestelling _order = null;
         public Bestelling Order
         {
             get => _order;
@@ -111,6 +134,7 @@ namespace KlantBestellingen.WPF
                     TbPrijs.Text = "0 EUR";
                     // Er is nog geen product geselecteerd:
                     CbProducts.SelectedItem = null;
+
                     // We zeggen tegen XAML WPF: pas je aan aan nieuwe data
                     NotifyPropertyChanged("Order");
                     return;
@@ -125,6 +149,9 @@ namespace KlantBestellingen.WPF
                         _orderProducts.Add(pkv.Key);
                     }
                 }
+                Korting = _klant.Korting().ToString();
+                CbPrijs.IsChecked = _order.Betaald;
+                TbPrijs.Text = TotalPrice;
                 DgProducts.ItemsSource = _orderProducts;
                 NotifyPropertyChanged("Order");
             }
@@ -145,9 +172,9 @@ namespace KlantBestellingen.WPF
         #region EventHandlers
         private void SlaBestellingOp_Click(object sender, RoutedEventArgs e)
         {
-            var orderProducts = new Dictionary<Product, int>();
             var total = 0.0;
-            foreach(var p in _orderProducts)
+            var orderProducts = new Dictionary<Product, int>();
+            foreach (var p in _orderProducts)
             {
                 if(orderProducts.ContainsKey(p))
                 {
@@ -159,21 +186,31 @@ namespace KlantBestellingen.WPF
                 }
                 total += p.Prijs;
             }
-            _order = new Bestelling(0, Klant, DateTime.Now, orderProducts) // Id 0 betekent voor database een primary key aanmaken want dit is een identity primary key
+            //checked of het een nieuwe bestelling is. Dus de bestelling mag nog geen ID hebben
+            if (_order == null)
             {
-                /*Betaald = (bool)CbPrijs.IsChecked,
-                PrijsBetaald = total*/
-            };
-            _order.ZetBetaald((bool)CbPrijs.IsChecked);
-            Context.BestellingManager.VoegBestellingToe(_order);
+                _order = new Bestelling(0, Klant, DateTime.Now, orderProducts); // Id 0 betekent voor database een primary key aanmaken want dit is een identity primary key
+                _order.ZetBetaald((bool)CbPrijs.IsChecked);
+                Context.BestellingManager.VoegBestellingToe(_order);
+            }
+            //indien wel id, bestelling updaten.
+            else
+            {
+                Context.BestellingManager.UpdateBestelling(_order);
+            }
+            //event oproepen
+            OnUpdate(e);
         }
 
         private void DeleteButton_Click(object sender, RoutedEventArgs e)
         {
-            if (CbProducts.SelectedIndex < 0)
+            if (DgProducts.SelectedIndex < 0)
                 return;
-            _orderProducts.Remove(CbProducts.SelectedItem as Product);
+            _order.VerwijderProduct(DgProducts.SelectedItem as Product, 1);
+            _orderProducts.Remove(DgProducts.SelectedItem as Product);
+            TbPrijs.Text = TotalPrice;
             NotifyPropertyChanged("TotalPrice"); // Doordat ik zeg: de totaalprijs is veranderd, zal XAML WPF deze property opnieuw ophalen om de user interface aan te passen
+            
         }
 
         private void BtnProductAdd_Click(object sender, RoutedEventArgs e)
@@ -181,7 +218,26 @@ namespace KlantBestellingen.WPF
             if (CbProducts.SelectedIndex < 0)
                 return;
             _orderProducts.Add(CbProducts.SelectedItem as Product);
+            //_order.VoegProductToe(CbProducts.SelectedItem as Product, 1);
+            TbPrijs.Text = TotalPrice;
             NotifyPropertyChanged("TotalPrice"); // Doordat ik zeg: de totaalprijs is veranderd, zal XAML WPF deze property opnieuw ophalen om de user interface aan te passen
+        }
+
+
+        private void CbPrijs_CheckedChanged(object sender, RoutedEventArgs e)
+        {
+            if (CbPrijs.IsChecked == true) {
+                Betaald = true;
+            }
+            else
+            {
+                Betaald = false;
+            }
+            if(_order != null)
+            {
+                _order.ZetBetaald(Betaald);
+            }
+            NotifyPropertyChanged("Betaald");
         }
         #endregion
     }
