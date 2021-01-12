@@ -126,8 +126,20 @@
   <data name="AddressTag" xml:space="preserve">
     <value>Adres: </value>
   </data>
+  <data name="AllCustomersDetails" xml:space="preserve">
+    <value>Geef alle klantgegevens op!</value>
+  </data>
+  <data name="AllProductDetails" xml:space="preserve">
+    <value>Geef alle productgegevens op!</value>
+  </data>
   <data name="Amount" xml:space="preserve">
     <value>Aantal</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Bevestig</value>
+  </data>
+  <data name="Customers" xml:space="preserve">
+    <value>Klanten</value>
   </data>
   <data name="ExceptionRaised" xml:space="preserve">
     <value>Er deed zich een fout voor</value>
@@ -147,8 +159,26 @@
   <data name="PriceTag" xml:space="preserve">
     <value>Prijs: </value>
   </data>
+  <data name="Products" xml:space="preserve">
+    <value>Producten</value>
+  </data>
   <data name="Remove" xml:space="preserve">
     <value>Verwijder</value>
+  </data>
+  <data name="RemoveCustomer" xml:space="preserve">
+    <value>Zeker dat je de kant wenst te verwijderen?</value>
+  </data>
+  <data name="RemoveCustomerError" xml:space="preserve">
+    <value>Error: klant verwijderen</value>
+  </data>
+  <data name="RemoveOrderError" xml:space="preserve">
+    <value>Error: product verwijderen</value>
+  </data>
+  <data name="RemoveOrdersFromCustomer" xml:space="preserve">
+    <value>Verwijder eerst alle bestellingen van </value>
+  </data>
+  <data name="RemoveProductFromOrder" xml:space="preserve">
+    <value>Verwijder eerst dit product van alle bestellingen</value>
   </data>
   <data name="Time" xml:space="preserve">
     <value>Tijd</value>

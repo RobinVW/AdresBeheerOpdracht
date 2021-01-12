@@ -126,8 +126,20 @@
   <data name="AddressTag" xml:space="preserve">
     <value>Address: </value>
   </data>
+  <data name="AllCustomersDetails" xml:space="preserve">
+    <value>Fill in all the customers details!</value>
+  </data>
+  <data name="AllProductDetails" xml:space="preserve">
+    <value>Fill in all the product details!</value>
+  </data>
   <data name="Amount" xml:space="preserve">
     <value>Amount</value>
+  </data>
+  <data name="Confirm" xml:space="preserve">
+    <value>Confirm</value>
+  </data>
+  <data name="Customers" xml:space="preserve">
+    <value>Customers</value>
   </data>
   <data name="ExceptionRaised" xml:space="preserve">
     <value>An exception was raised</value>
@@ -147,8 +159,26 @@
   <data name="PriceTag" xml:space="preserve">
     <value>Price: </value>
   </data>
+  <data name="Products" xml:space="preserve">
+    <value>Products</value>
+  </data>
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
+  </data>
+  <data name="RemoveCustomer" xml:space="preserve">
+    <value>Are you sure you want to remove the customer?</value>
+  </data>
+  <data name="RemoveCustomerError" xml:space="preserve">
+    <value>Error: remove customer</value>
+  </data>
+  <data name="RemoveOrderError" xml:space="preserve">
+    <value>Error: remove product</value>
+  </data>
+  <data name="RemoveOrdersFromCustomer" xml:space="preserve">
+    <value>First delete all orders from </value>
+  </data>
+  <data name="RemoveProductFromOrder" xml:space="preserve">
+    <value>First remove this product from all orders</value>
   </data>
   <data name="Time" xml:space="preserve">
     <value>Time</value>

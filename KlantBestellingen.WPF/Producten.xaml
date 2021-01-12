@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:KlantBestellingen.WPF"
         xmlns:langs="clr-namespace:KlantBestellingen.WPF.Languages"
         mc:Ignorable="d"
-        Title="Producten" Height="450" Width="800">
+        Title="{x:Static langs:Translations.Products}" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*"></RowDefinition>
@@ -16,7 +16,7 @@
             <ColumnDefinition Width="Auto"></ColumnDefinition>
             <ColumnDefinition Width="*"></ColumnDefinition>
         </Grid.ColumnDefinitions>
-        <DataGrid x:Name="dgProducten" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True" AlternatingRowBackground="#FFB9BBFF" CommandManager.PreviewExecuted="DgProducten_PreviewDeleteCommandHandler">
+        <DataGrid x:Name="dgProducten" Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Margin="5" AutoGenerateColumns="False" CanUserAddRows="True" CanUserDeleteRows="True" AlternatingRowBackground="#F5F5F5" CommandManager.PreviewExecuted="DgProducten_PreviewDeleteCommandHandler">
             <DataGrid.Columns>
                 <!-- we linken ons aan een property van de class Klant: -->
                 <DataGridTextColumn Header="{x:Static langs:Translations.Name}" Binding="{Binding Naam}" MinWidth="200"/>

@@ -1,5 +1,7 @@
 ﻿using AdresBeheerOpdracht.Model;
 using AdresBeheerOpdracht.Tools;
+using KlantBestellingen.WPF.Languages;
+using System;
 using System.Collections.ObjectModel;
 using System.Collections.Specialized;
 using System.Windows;
@@ -52,7 +54,7 @@ namespace KlantBestellingen.WPF
             // Preconditie
             if (string.IsNullOrEmpty(TbKlantNaam?.Text) || string.IsNullOrEmpty(TbKlantAdres?.Text))
             {
-                MessageBox.Show("Geef alle klantgegevens op!");
+                MessageBox.Show(Translations.AllCustomersDetails);
                 return;
             }
 
@@ -79,7 +81,7 @@ namespace KlantBestellingen.WPF
             var grid = (DataGrid)sender;
             if (Key.Delete == e.Key)
             {
-                if (!(MessageBox.Show("Zeker dat je de klant wenst te verwijderen?", "Bevestig.", MessageBoxButton.YesNo) == MessageBoxResult.Yes))
+                if (!(MessageBox.Show(Translations.RemoveCustomer, Translations.Confirm, MessageBoxButton.YesNo) == MessageBoxResult.Yes))
                 {
                     // Cancel Delete.
                     e.Handled = true;
@@ -90,7 +92,16 @@ namespace KlantBestellingen.WPF
                 while (grid.SelectedItems.Count > 0)
                 {
                     var row = grid.SelectedItems[0];
-                    _klanten.Remove(row as Klant);
+                    Klant klant = row as Klant;
+                    if (klant.GetBestellingen().Count == 0)
+                    {
+                        _klanten.Remove(row as Klant);
+                    }
+                    else
+                    {
+                        MessageBox.Show(Translations.RemoveOrdersFromCustomer + klant.Naam, Translations.RemoveCustomerError, MessageBoxButton.OK, MessageBoxImage.Warning);
+                        break;
+                    }
                 }
             }
         }
@@ -100,8 +111,17 @@ namespace KlantBestellingen.WPF
             // We moeten een while gebruiken en telkens testen want met foreach treden problemen op omdat de verzameling intussen telkens wijzigt!
             while (dgKlanten.SelectedItems.Count > 0)
             {
-                var row = dgKlanten.SelectedItems[0];
-                _klanten.Remove(row as Klant);
+                    var row = dgKlanten.SelectedItems[0];
+                    Klant klant = row as Klant;
+                if (klant.GetBestellingen().Count == 0) {
+                    _klanten.Remove(row as Klant);
+                }
+                else
+                {
+                    MessageBox.Show(Translations.RemoveOrdersFromCustomer+ klant.Naam, Translations.RemoveCustomerError, MessageBoxButton.OK, MessageBoxImage.Warning);
+                    break;
+                }
+                    
             }
         }
     }

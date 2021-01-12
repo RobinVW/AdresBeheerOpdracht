@@ -88,11 +88,47 @@ namespace KlantBestellingen.WPF.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Fill in all the customers details!.
+        /// </summary>
+        public static string AllCustomersDetails {
+            get {
+                return ResourceManager.GetString("AllCustomersDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Fill in all the product details!.
+        /// </summary>
+        public static string AllProductDetails {
+            get {
+                return ResourceManager.GetString("AllProductDetails", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Amount.
         /// </summary>
         public static string Amount {
             get {
                 return ResourceManager.GetString("Amount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Confirm.
+        /// </summary>
+        public static string Confirm {
+            get {
+                return ResourceManager.GetString("Confirm", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customers.
+        /// </summary>
+        public static string Customers {
+            get {
+                return ResourceManager.GetString("Customers", resourceCulture);
             }
         }
         
@@ -151,11 +187,65 @@ namespace KlantBestellingen.WPF.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Products.
+        /// </summary>
+        public static string Products {
+            get {
+                return ResourceManager.GetString("Products", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Remove.
         /// </summary>
         public static string Remove {
             get {
                 return ResourceManager.GetString("Remove", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Are you sure you want to remove the customer?.
+        /// </summary>
+        public static string RemoveCustomer {
+            get {
+                return ResourceManager.GetString("RemoveCustomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: remove customer.
+        /// </summary>
+        public static string RemoveCustomerError {
+            get {
+                return ResourceManager.GetString("RemoveCustomerError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Error: remove product.
+        /// </summary>
+        public static string RemoveOrderError {
+            get {
+                return ResourceManager.GetString("RemoveOrderError", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First delete all orders from .
+        /// </summary>
+        public static string RemoveOrdersFromCustomer {
+            get {
+                return ResourceManager.GetString("RemoveOrdersFromCustomer", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to First remove this product from all orders.
+        /// </summary>
+        public static string RemoveProductFromOrder {
+            get {
+                return ResourceManager.GetString("RemoveProductFromOrder", resourceCulture);
             }
         }
         

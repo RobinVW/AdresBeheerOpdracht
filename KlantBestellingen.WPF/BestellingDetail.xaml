@@ -34,7 +34,7 @@
         <Label x:Name="LblAddProduct" Grid.Row="4" Content="Producten: " Margin="5" VerticalAlignment="Center" HorizontalAlignment="Left"></Label>
         <ComboBox x:Name="CbProducts" Grid.Row="4" Grid.Column="1" MinWidth="250" Margin="5" VerticalAlignment="Center" SelectedValuePath="Naam" DisplayMemberPath="Naam"></ComboBox>
         <Button x:Name="BtnProductAdd" Grid.Row="4" Grid.Column="2" Content="Voeg toe" Margin="5" VerticalAlignment="Center" HorizontalAlignment="Right" Click="BtnProductAdd_Click"/>
-        <DataGrid x:Name="DgProducts" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Margin="5" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="True" AlternatingRowBackground="#FFB9BBFF" IsReadOnly="True">
+        <DataGrid x:Name="DgProducts" Grid.Row="5" Grid.Column="0" Grid.ColumnSpan="3" Margin="5" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="True" AlternatingRowBackground="#F5F5F5" IsReadOnly="True">
             <DataGrid.Columns>
                 <DataGridTextColumn Header="{x:Static langs:Translations.Name}" Binding="{Binding Naam}" MinWidth="200"/>
                 <DataGridTextColumn Header="{x:Static langs:Translations.Price}" Binding="{Binding Prijs}" MinWidth="200"/>
