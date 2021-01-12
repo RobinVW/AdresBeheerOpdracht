@@ -223,7 +223,7 @@ namespace KlantBestellingADO.Managers
                     {
                         //bestelling toevoegen
                         command1.Parameters.Add("@betaald", SqlDbType.Bit).Value = bestelling.Betaald;
-                        command1.Parameters.Add("@prijsBetaald", SqlDbType.Float).Value = bestelling.PrijsBetaald;
+                        command1.Parameters.Add("@prijsBetaald", SqlDbType.Float).Value = bestelling.Kostprijs();
                         command1.Parameters.Add("@tijdstip", SqlDbType.DateTime).Value = bestelling.Tijdstip;
                         if (bestelling.Klant != null)
                         {
@@ -294,6 +294,7 @@ namespace KlantBestellingADO.Managers
                     {
                         bestelling.ZetBetaald();
                     }
+                    bestelling.Kostprijs();
                     //update bestelling in de database
                     SqlParameter paramId = new SqlParameter();
                     paramId.ParameterName = "@bestellingID";
@@ -309,7 +310,7 @@ namespace KlantBestellingADO.Managers
                     DataTable table = new DataTable();
                     adapter.Fill(table);
                     table.Rows[0]["betaald"] = bestelling.Betaald;
-                    table.Rows[0]["prijsBetaald"] = bestelling.PrijsBetaald;
+                    table.Rows[0]["prijsBetaald"] = bestelling.Kostprijs();
                     table.Rows[0]["tijdstip"] = bestelling.Tijdstip;
                     table.Rows[0]["klantID"] = bestelling.Klant.KlantId;
 

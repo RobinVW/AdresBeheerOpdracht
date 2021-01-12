@@ -219,7 +219,10 @@ namespace KlantBestellingen.WPF
             if (CbProducts.SelectedIndex < 0)
                 return;
             _orderProducts.Add(CbProducts.SelectedItem as Product);
-            //_order.VoegProductToe(CbProducts.SelectedItem as Product, 1);
+            // als order doorgegeven werd via main window moet je de order lijst van producten aanpassen
+            if (_order != null) {
+                _order.VoegProductToe(CbProducts.SelectedItem as Product, 1);
+            }
             TbPrijs.Text = TotalPrice;
             NotifyPropertyChanged("TotalPrice"); // Doordat ik zeg: de totaalprijs is veranderd, zal XAML WPF deze property opnieuw ophalen om de user interface aan te passen
         }

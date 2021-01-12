@@ -138,8 +138,23 @@
   <data name="Confirm" xml:space="preserve">
     <value>Confirm</value>
   </data>
+  <data name="CustomerAddress" xml:space="preserve">
+    <value>Customer address</value>
+  </data>
+  <data name="CustomerName" xml:space="preserve">
+    <value>Customer name</value>
+  </data>
+  <data name="CustomerName_" xml:space="preserve">
+    <value>Customer name: </value>
+  </data>
   <data name="Customers" xml:space="preserve">
     <value>Customers</value>
+  </data>
+  <data name="CustomerTag" xml:space="preserve">
+    <value>Customer: </value>
+  </data>
+  <data name="DiscountTag" xml:space="preserve">
+    <value>Discount: </value>
   </data>
   <data name="ExceptionRaised" xml:space="preserve">
     <value>An exception was raised</value>
@@ -153,14 +168,44 @@
   <data name="NameTag" xml:space="preserve">
     <value>Name: </value>
   </data>
+  <data name="NewOrder" xml:space="preserve">
+    <value>New order...</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="OrderManagementSystem" xml:space="preserve">
+    <value>Order management system</value>
+  </data>
+  <data name="OrderProductCount" xml:space="preserve">
+    <value>The selected order has </value>
+  </data>
+  <data name="Orders_" xml:space="preserve">
+    <value>Orders: </value>
+  </data>
+  <data name="Paid" xml:space="preserve">
+    <value>Paid?</value>
+  </data>
+  <data name="PaidTag" xml:space="preserve">
+    <value>Paid: </value>
+  </data>
+  <data name="PaidToolTip" xml:space="preserve">
+    <value>Is the order paid?</value>
+  </data>
   <data name="Price" xml:space="preserve">
     <value>Price</value>
   </data>
   <data name="PriceTag" xml:space="preserve">
     <value>Price: </value>
   </data>
+  <data name="ProductProducts" xml:space="preserve">
+    <value> product(s)</value>
+  </data>
   <data name="Products" xml:space="preserve">
     <value>Products</value>
+  </data>
+  <data name="ProductsTag" xml:space="preserve">
+    <value>Products: </value>
   </data>
   <data name="Remove" xml:space="preserve">
     <value>Remove</value>
@@ -180,10 +225,37 @@
   <data name="RemoveProductFromOrder" xml:space="preserve">
     <value>First remove this product from all orders</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
   <data name="Time" xml:space="preserve">
     <value>Time</value>
   </data>
   <data name="TotalPrice" xml:space="preserve">
     <value>Total Price</value>
+  </data>
+  <data name="_Close" xml:space="preserve">
+    <value>_Close</value>
+  </data>
+  <data name="_Customers" xml:space="preserve">
+    <value>_Customers</value>
+  </data>
+  <data name="_Dutch" xml:space="preserve">
+    <value>_Dutch</value>
+  </data>
+  <data name="_English" xml:space="preserve">
+    <value>_English</value>
+  </data>
+  <data name="_File" xml:space="preserve">
+    <value>_File</value>
+  </data>
+  <data name="_Language" xml:space="preserve">
+    <value>_Language</value>
+  </data>
+  <data name="_Management" xml:space="preserve">
+    <value>_Management</value>
+  </data>
+  <data name="_Products" xml:space="preserve">
+    <value>_Products</value>
   </data>
 </root>

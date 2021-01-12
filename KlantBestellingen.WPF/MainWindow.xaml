@@ -6,7 +6,7 @@
         xmlns:langs="clr-namespace:KlantBestellingen.WPF.Languages"
         xmlns:local="clr-namespace:KlantBestellingen.WPF"
         mc:Ignorable="d"
-        Title="Bestellingssysteem" Height="450" Width="800">
+        Title="{x:Static langs:Translations.OrderManagementSystem}" Height="450" Width="800">
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/> <!-- menu -->
@@ -15,26 +15,30 @@
         </Grid.RowDefinitions>
         <DockPanel Grid.Row="0" Grid.Column="0">
             <Menu DockPanel.Dock="Top">
-                <MenuItem Header="_Bestand">
-                    <MenuItem Header="_Sluiten" Click="MenuItemSluiten_Click">
+                <MenuItem Header="{x:Static langs:Translations._File}">
+                    <MenuItem Header="{x:Static langs:Translations._Close}" Click="MenuItemSluiten_Click">
                         <MenuItem.Icon>
                             <Image Source="/KlantBestellingen.WPF;component/Images/close.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
-                <MenuItem Header="_Beheer">
-                    <MenuItem Header="_Klanten" Click="MenuItem_Klanten_Click">
+                <MenuItem Header="{x:Static langs:Translations._Management}">
+                    <MenuItem Header="{x:Static langs:Translations._Customers}" Click="MenuItem_Klanten_Click">
                         <MenuItem.Icon>
                             <!-- Build action: content, Copy to Output Directory -->
                             <Image Source="/KlantBestellingen.WPF;component/Images/user.png" />
                         </MenuItem.Icon>
                     </MenuItem>
-                    <MenuItem Header="_Producten" Click="MenuItem_Producten_Click">
+                    <MenuItem Header="{x:Static langs:Translations._Products}" Click="MenuItem_Producten_Click">
                         <MenuItem.Icon>
                             <Image Source="/KlantBestellingen.WPF;component/Images/product.png" />
                         </MenuItem.Icon>
                     </MenuItem>
                 </MenuItem>
+                <!--<MenuItem Header="{x:Static langs:Translations._Language}">
+                    <MenuItem Header="{x:Static langs:Translations._Dutch}" Click="MenuItem_Dutch_Click"></MenuItem>
+                    <MenuItem Header="{x:Static langs:Translations._English}" Click="MenuItem_English_Click"></MenuItem>
+                </MenuItem> -->
             </Menu>
         </DockPanel>
         <Grid Grid.Row="1" Grid.Column="0">
@@ -49,17 +53,17 @@
                 <ColumnDefinition Width="Auto"></ColumnDefinition>
                 <ColumnDefinition Width="*"></ColumnDefinition>
             </Grid.ColumnDefinitions>
-            <Label x:Name="lblKlant" Grid.Row="0" Grid.Column="0" Margin="5" Content="Klantnaam: " VerticalAlignment="Center"/>
+            <Label x:Name="lblKlant" Grid.Row="0" Grid.Column="0" Margin="5" Content="{x:Static langs:Translations.CustomerName_}" VerticalAlignment="Center"/>
             <TextBox x:Name="tbKlant" Grid.Row="0" Grid.Column="1" Margin="5" MinWidth="250" KeyUp="TextBox_KeyUp" VerticalAlignment="Center" VerticalContentAlignment="Center"/>
             <ComboBox x:Name="cbKlanten" Grid.Row="0" Grid.Column="2" Margin="5" DisplayMemberPath="Naam" SelectedValuePath="Naam" VerticalAlignment="Center" SelectionChanged="ComboBox_SelectionChanged"/>
-            <Label x:Name="lblBestellingen" Grid.Row="1" Grid.Column="0" Margin="5" Content="Bestellingen: "/>
+            <Label x:Name="lblBestellingen" Grid.Row="1" Grid.Column="0" Margin="5" Content="{x:Static langs:Translations.Orders_}"/>
             <DataGrid x:Name="dgOrderSelection" Grid.Row="2" Grid.ColumnSpan="3" Margin="5" AutoGenerateColumns="False" CanUserAddRows="False" CanUserDeleteRows="True" AlternatingRowBackground="#F5F5F5" IsReadOnly="True" SelectionChanged="DataGrid_SelectionChanged">
                 <DataGrid.Columns>
                     <!-- we linken ons aan een property van de class Bestelling: -->
                     <DataGridTextColumn  Header="ID" Binding="{Binding BestellingId}" MinWidth="150"/>
                     <DataGridTextColumn  Header="{x:Static langs:Translations.Time}" Binding="{Binding Tijdstip}" MinWidth="250"/>
                     <DataGridTextColumn  Header="{x:Static langs:Translations.Price}" Binding="{Binding PrijsBetaald}" MinWidth="200"/>
-                    <DataGridTextColumn  Header="Betaald?" Binding="{Binding Betaald}" MinWidth="200"/>
+                    <DataGridTextColumn  Header="{x:Static langs:Translations.Paid}" Binding="{Binding Betaald}" MinWidth="200"/>
                 </DataGrid.Columns>
                 <DataGrid.Resources>
                     <Style TargetType="DataGridRow">
@@ -67,7 +71,7 @@
                     </Style>
                 </DataGrid.Resources>
             </DataGrid>
-            <Button x:Name="BtnNieuweBestelling" Grid.Row="3" Grid.Column="2" Content="Nieuwe bestelling..." Click="MaakBestelling_Click" HorizontalAlignment="Right" Margin="5"/>
+            <Button x:Name="BtnNieuweBestelling" Grid.Row="3" Grid.Column="2" Content="{x:Static langs:Translations.NewOrder}" Click="MaakBestelling_Click" HorizontalAlignment="Right" Margin="5"/>
         </Grid>
         <DockPanel Grid.Row="2">
             <StatusBar DockPanel.Dock="Bottom">

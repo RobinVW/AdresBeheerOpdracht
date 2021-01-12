@@ -1,4 +1,5 @@
 ﻿using AdresBeheerOpdracht.Model;
+using KlantBestellingen.WPF.Languages;
 using System;
 using System.Windows;
 using System.Windows.Controls;
@@ -164,12 +165,23 @@ namespace KlantBestellingen.WPF
             if(bestelling != null)
             {
                 count = bestelling.GeefProducten().Count;
-                TbStatusInformation.Text = "De geselecteerde bestelling heeft " + count + " product(en)";
+                TbStatusInformation.Text = Translations.OrderProductCount + count + Translations.ProductProducts;
             }
             if(count == 0)
             {
                 TbStatusInformation.Text = "";
             }
         }
+        /*private void MenuItem_Dutch_Click(object sender, RoutedEventArgs e)
+        {
+            Translations.Culture = new System.Globalization.CultureInfo("nl-BE");
+            
+        }
+
+        private void MenuItem_English_Click(object sender, RoutedEventArgs e)
+        {
+            Translations.Culture = new System.Globalization.CultureInfo("en-US");
+        }*/
+
     }
 }

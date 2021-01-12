@@ -138,8 +138,23 @@
   <data name="Confirm" xml:space="preserve">
     <value>Bevestig</value>
   </data>
+  <data name="CustomerAddress" xml:space="preserve">
+    <value>Klantadres</value>
+  </data>
+  <data name="CustomerName" xml:space="preserve">
+    <value>Klantnaam</value>
+  </data>
+  <data name="CustomerName_" xml:space="preserve">
+    <value>Klantnaam: </value>
+  </data>
   <data name="Customers" xml:space="preserve">
     <value>Klanten</value>
+  </data>
+  <data name="CustomerTag" xml:space="preserve">
+    <value>Klant: </value>
+  </data>
+  <data name="DiscountTag" xml:space="preserve">
+    <value>Korting: </value>
   </data>
   <data name="ExceptionRaised" xml:space="preserve">
     <value>Er deed zich een fout voor</value>
@@ -153,14 +168,44 @@
   <data name="NameTag" xml:space="preserve">
     <value>Naam: </value>
   </data>
+  <data name="NewOrder" xml:space="preserve">
+    <value>Nieuwe bestelling...</value>
+  </data>
+  <data name="Order" xml:space="preserve">
+    <value>Bestelling</value>
+  </data>
+  <data name="OrderManagementSystem" xml:space="preserve">
+    <value>Bestellingssysteem</value>
+  </data>
+  <data name="OrderProductCount" xml:space="preserve">
+    <value>De geselecteerde bestelling heeft </value>
+  </data>
+  <data name="Orders_" xml:space="preserve">
+    <value>Bestellingen: </value>
+  </data>
+  <data name="Paid" xml:space="preserve">
+    <value>Betaald?</value>
+  </data>
+  <data name="PaidTag" xml:space="preserve">
+    <value>Betaald: </value>
+  </data>
+  <data name="PaidToolTip" xml:space="preserve">
+    <value>Is de bestelling betaald?</value>
+  </data>
   <data name="Price" xml:space="preserve">
     <value>Prijs</value>
   </data>
   <data name="PriceTag" xml:space="preserve">
     <value>Prijs: </value>
   </data>
+  <data name="ProductProducts" xml:space="preserve">
+    <value> product(en)</value>
+  </data>
   <data name="Products" xml:space="preserve">
     <value>Producten</value>
+  </data>
+  <data name="ProductsTag" xml:space="preserve">
+    <value>Producten: </value>
   </data>
   <data name="Remove" xml:space="preserve">
     <value>Verwijder</value>
@@ -180,10 +225,37 @@
   <data name="RemoveProductFromOrder" xml:space="preserve">
     <value>Verwijder eerst dit product van alle bestellingen</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Sla op</value>
+  </data>
   <data name="Time" xml:space="preserve">
     <value>Tijd</value>
   </data>
   <data name="TotalPrice" xml:space="preserve">
     <value>Totale prijs</value>
+  </data>
+  <data name="_Close" xml:space="preserve">
+    <value>_Sluiten</value>
+  </data>
+  <data name="_Customers" xml:space="preserve">
+    <value>_Klanten</value>
+  </data>
+  <data name="_Dutch" xml:space="preserve">
+    <value>_Nederlands</value>
+  </data>
+  <data name="_English" xml:space="preserve">
+    <value>_Engels</value>
+  </data>
+  <data name="_File" xml:space="preserve">
+    <value>_Bestand</value>
+  </data>
+  <data name="_Language" xml:space="preserve">
+    <value>_Taal</value>
+  </data>
+  <data name="_Management" xml:space="preserve">
+    <value>_Beheer</value>
+  </data>
+  <data name="_Products" xml:space="preserve">
+    <value>_Producten</value>
   </data>
 </root>

@@ -61,6 +61,78 @@ namespace KlantBestellingen.WPF.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to _Close.
+        /// </summary>
+        public static string _Close {
+            get {
+                return ResourceManager.GetString("_Close", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Customers.
+        /// </summary>
+        public static string _Customers {
+            get {
+                return ResourceManager.GetString("_Customers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Dutch.
+        /// </summary>
+        public static string _Dutch {
+            get {
+                return ResourceManager.GetString("_Dutch", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _English.
+        /// </summary>
+        public static string _English {
+            get {
+                return ResourceManager.GetString("_English", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _File.
+        /// </summary>
+        public static string _File {
+            get {
+                return ResourceManager.GetString("_File", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Language.
+        /// </summary>
+        public static string _Language {
+            get {
+                return ResourceManager.GetString("_Language", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Management.
+        /// </summary>
+        public static string _Management {
+            get {
+                return ResourceManager.GetString("_Management", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to _Products.
+        /// </summary>
+        public static string _Products {
+            get {
+                return ResourceManager.GetString("_Products", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Add.
         /// </summary>
         public static string Add {
@@ -124,11 +196,56 @@ namespace KlantBestellingen.WPF.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Customer address.
+        /// </summary>
+        public static string CustomerAddress {
+            get {
+                return ResourceManager.GetString("CustomerAddress", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer name.
+        /// </summary>
+        public static string CustomerName {
+            get {
+                return ResourceManager.GetString("CustomerName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer name: .
+        /// </summary>
+        public static string CustomerName_ {
+            get {
+                return ResourceManager.GetString("CustomerName_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Customers.
         /// </summary>
         public static string Customers {
             get {
                 return ResourceManager.GetString("Customers", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Customer: .
+        /// </summary>
+        public static string CustomerTag {
+            get {
+                return ResourceManager.GetString("CustomerTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Discount: .
+        /// </summary>
+        public static string DiscountTag {
+            get {
+                return ResourceManager.GetString("DiscountTag", resourceCulture);
             }
         }
         
@@ -169,6 +286,78 @@ namespace KlantBestellingen.WPF.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to New order....
+        /// </summary>
+        public static string NewOrder {
+            get {
+                return ResourceManager.GetString("NewOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order.
+        /// </summary>
+        public static string Order {
+            get {
+                return ResourceManager.GetString("Order", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Order management system.
+        /// </summary>
+        public static string OrderManagementSystem {
+            get {
+                return ResourceManager.GetString("OrderManagementSystem", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to The selected order has .
+        /// </summary>
+        public static string OrderProductCount {
+            get {
+                return ResourceManager.GetString("OrderProductCount", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Orders: .
+        /// </summary>
+        public static string Orders_ {
+            get {
+                return ResourceManager.GetString("Orders_", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paid?.
+        /// </summary>
+        public static string Paid {
+            get {
+                return ResourceManager.GetString("Paid", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Paid: .
+        /// </summary>
+        public static string PaidTag {
+            get {
+                return ResourceManager.GetString("PaidTag", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Is the order paid?.
+        /// </summary>
+        public static string PaidToolTip {
+            get {
+                return ResourceManager.GetString("PaidToolTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Price.
         /// </summary>
         public static string Price {
@@ -187,11 +376,29 @@ namespace KlantBestellingen.WPF.Languages {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to  product(s).
+        /// </summary>
+        public static string ProductProducts {
+            get {
+                return ResourceManager.GetString("ProductProducts", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Products.
         /// </summary>
         public static string Products {
             get {
                 return ResourceManager.GetString("Products", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Products: .
+        /// </summary>
+        public static string ProductsTag {
+            get {
+                return ResourceManager.GetString("ProductsTag", resourceCulture);
             }
         }
         
@@ -246,6 +453,15 @@ namespace KlantBestellingen.WPF.Languages {
         public static string RemoveProductFromOrder {
             get {
                 return ResourceManager.GetString("RemoveProductFromOrder", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Save.
+        /// </summary>
+        public static string Save {
+            get {
+                return ResourceManager.GetString("Save", resourceCulture);
             }
         }
         

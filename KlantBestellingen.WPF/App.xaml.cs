@@ -13,7 +13,7 @@ namespace KlantBestellingen.WPF
         private App()
         {
             // Wisselen van taal:
-            Translations.Culture = new System.Globalization.CultureInfo("nl-BE"); // en-US nl-BE
+            Translations.Culture = new System.Globalization.CultureInfo("en-US"); // en-US nl-BE
             Context.Populate();
         }
 
